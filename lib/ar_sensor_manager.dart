@@ -32,11 +32,12 @@ class ArSensorManager {
   double _heading = 0.0;
   double _compassAccuracy = 0.0;
 
-  final StreamController<ArSensor> _arSensor = StreamController();
+  late StreamController<ArSensor> _arSensorController;
 
   List<double> pitchHistory = [];
 
   void init() {
+    _arSensorController = StreamController();
     _checkLocationPermission();
   }
 
@@ -93,15 +94,15 @@ class ArSensorManager {
 
     final arSensor = ArSensor(
       heading: _heading,
-      pitch: _filterExponantial(pitchHistory, alpha),
+      pitch: _filterExponential(pitchHistory, alpha),
       location: _position,
       orientation: _orientation,
       compassAccuracy: _compassAccuracy,
     );
-    _arSensor.add(arSensor);
+    _arSensorController.add(arSensor);
   }
 
-  Stream<ArSensor> get arSensor => _arSensor.stream;
+  Stream<ArSensor> get arSensor => _arSensorController.stream;
 
   Future<void> _checkLocationPermission() async {
     bool isLocationGranted = await Permission.location.isGranted;
@@ -117,6 +118,7 @@ class ArSensorManager {
   }
 
   void dispose() {
+    _arSensorController.close();
     _accelerationStream?.cancel();
     _userAccelerationStream?.cancel();
     _positionSubscription?.cancel();
@@ -124,7 +126,7 @@ class ArSensorManager {
     _headingStream?.cancel();
   }
 
-  double _filterExponantial(List<double> numbers, double alpha) {
+  double _filterExponential(List<double> numbers, double alpha) {
     final coef = 1 - alpha;
     final temps = numbers.reversed.toList();
     double sum = 0.0;
