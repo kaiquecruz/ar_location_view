@@ -5,8 +5,8 @@ abstract class ArAnnotation {
   ArAnnotation({
     required this.uid,
     required this.position,
-    this.azimuth = 0,
-    this.distanceFromUser = 0,
+    required this.azimuth = 0,
+    required this.distanceFromUser = 0,
     this.isVisible = false,
     this.arPosition = const Offset(0, 0),
     this.arPositionOffset = const Offset(0, 0),
