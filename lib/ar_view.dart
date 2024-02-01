@@ -275,7 +275,8 @@ class _ArViewState extends State<ArView> {
       ArSensor arSensor) {
     return annotations.map((e) {
       final annotationLocation = e.position;
-      e.azimuth = Geolocator.bearingBetween(
+      // 
+      /*e.azimuth = Geolocator.bearingBetween(
         deviceLocation.latitude,
         deviceLocation.longitude,
         annotationLocation.latitude,
@@ -285,7 +286,7 @@ class _ArViewState extends State<ArView> {
           deviceLocation.latitude,
           deviceLocation.longitude,
           annotationLocation.latitude,
-          annotationLocation.longitude);
+          annotationLocation.longitude);*/
       final dy = arSensor.pitch * arStatus.vPixelPerDegree;
       final dx = ArMath.deltaAngle(e.azimuth, arSensor.heading) *
           arStatus.hPixelPerDegree;
