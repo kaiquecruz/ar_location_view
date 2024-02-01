@@ -275,7 +275,7 @@ class _ArViewState extends State<ArView> {
       ArSensor arSensor) {
     return annotations.map((e) {
       final annotationLocation = e.position;
-      // 
+      // CALCULO REALIZADO PELO APP
       /*e.azimuth = Geolocator.bearingBetween(
         deviceLocation.latitude,
         deviceLocation.longitude,
